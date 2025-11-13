@@ -7,6 +7,7 @@ function Login() {
   const { setCurrentUser, setUserToken } = useStateContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
   const [error, setError] = useState({ __html: "" });
 
   const onSubmit = (ev) => {
@@ -15,11 +16,12 @@ function Login() {
 
       axiosClient.post('/login', {
           email,
-          password
+          password,
+          remember 
       })
       .then(({data}) => {
           setCurrentUser(data.user);
-          setUserToken(data.token);
+          setUserToken(data.token, remember);
       })
       .catch((error) => {
         if (error.response) {
@@ -36,7 +38,7 @@ function Login() {
           {error.__html && (
               <div className="bg-red-500 rounded py-2 px-3 mb-2 text-white" dangerouslySetInnerHTML={error}></div>
           )}
-          
+
           <form onSubmit={onSubmit}>
             <h2 className="text-3xl text-center font-semibold mb-6">Login</h2>
 
@@ -82,6 +84,8 @@ function Login() {
                 type="checkbox"
                 id="remember"
                 name="remember"
+                checked={remember}
+                onChange={(ev) => setRemember(ev.target.checked)}
                 className="mr-2"
               />
               <label htmlFor="remember" className="text-gray-700 font-medium">

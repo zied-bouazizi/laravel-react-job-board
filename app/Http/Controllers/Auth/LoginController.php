@@ -19,7 +19,9 @@ class LoginController extends Controller
 
         $user = $request->user();
 
-        $token = $user->createToken('main')->plainTextToken;
+        $remember = $request->boolean('remember');
+        $tokenName = $remember ? 'main_remember' : 'main';
+        $token = $user->createToken($tokenName)->plainTextToken;
 
         return [
             'user' => new UserResource($user),
