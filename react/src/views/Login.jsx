@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react';
 import { useStateContext } from '../contexts/ContextProvider';
 import axiosClient from '../axios';
@@ -9,6 +9,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState({ __html: "" });
+  const location = useLocation();
+  const message = location.state?.message;
 
   const onSubmit = (ev) => {
       ev.preventDefault();
@@ -38,6 +40,8 @@ function Login() {
           {error.__html && (
               <div className="bg-red-500 rounded py-2 px-3 mb-2 text-white" dangerouslySetInnerHTML={error}></div>
           )}
+
+          {message && <div className="bg-green-500 rounded py-2 px-3 mb-4 text-white">{message}</div>}
 
           <form onSubmit={onSubmit}>
             <h2 className="text-3xl text-center font-semibold mb-6">Login</h2>
