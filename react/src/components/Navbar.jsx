@@ -44,6 +44,9 @@ function Navbar() {
                     <NavLink to="/add-job" className={linkClass}>
                       Add Job
                     </NavLink>
+                    <NavLink to="/profile" className={linkClass}>
+                      Profile
+                    </NavLink>
                     <button
                       onClick={(ev) => logout(ev)}
                       className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"

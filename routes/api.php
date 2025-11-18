@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\ListingController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
 });
 
 Route::apiResource('listings', ListingController::class);
