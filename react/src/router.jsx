@@ -10,6 +10,7 @@ import NotFound from "./views/NotFound";
 import DefaultLayout from "./layouts/DefaultLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import SharedLayout from "./layouts/SharedLayout";
+import Job from "./views/Job";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/jobs",
         element: <Jobs />,
+      },
+      {
+        path: "/jobs/:id",
+        element: <Job />,
       },
       {
         path: "*",

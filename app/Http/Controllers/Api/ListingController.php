@@ -19,4 +19,14 @@ class ListingController extends Controller
 
         return ListingResource::collection($listings);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Listing $listing)
+    {
+        $listing->load('company');
+
+        return new ListingResource($listing);
+    }
 }
