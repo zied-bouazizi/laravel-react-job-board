@@ -4,6 +4,7 @@ import UpdatePasswordForm from "../components/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../components/UpdateProfileInformationForm";
 import axiosClient from "../axios";
 import Spinners from "../components/Spinners";
+import DeleteUserForm from "../components/DeleteUserForm";
 
 function Profile() {
   const [user, setUser] = useState({});
@@ -34,6 +35,8 @@ function Profile() {
             <UpdatePasswordForm />
 
             <CompanyForm company={company} />
+
+            <DeleteUserForm />
           </>
         )}
       </div>

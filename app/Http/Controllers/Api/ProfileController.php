@@ -37,6 +37,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->noContent();
+    }
+
+    /**
      * Update the user's password.
      */
     public function updatePassword(Request $request)
