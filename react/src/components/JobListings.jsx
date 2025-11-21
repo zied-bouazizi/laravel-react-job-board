@@ -1,7 +1,7 @@
 import JobListing from "./JobListing";
 import axiosClient from "../axios";
 import { useEffect, useState, useCallback } from "react";
-import Spinners from "./Spinners";
+import Spinner from "./Spinner";
 import InfiniteScroll from "./InfiniteScroll";
 
 function JobListings({ isHome = false }) {
@@ -40,7 +40,7 @@ function JobListings({ isHome = false }) {
         </h2>
 
         {loading ? (
-          <Spinners loading={loading} />
+          <Spinner loading={loading} />
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -52,7 +52,9 @@ function JobListings({ isHome = false }) {
             {!isHome && (
               <>
                 <InfiniteScroll onLoadMore={loadMore} disabled={!nextPage} />
-                {loadingMore && <Spinners loading={loadingMore} />}
+                {loadingMore && (
+                  <Spinner loading={loadingMore} size={80} margin="50px auto" />
+                )}
               </>
             )}
           </>

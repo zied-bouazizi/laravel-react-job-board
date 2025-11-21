@@ -3,7 +3,7 @@ import CompanyForm from "../components/CompanyForm";
 import UpdatePasswordForm from "../components/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../components/UpdateProfileInformationForm";
 import axiosClient from "../axios";
-import Spinners from "../components/Spinners";
+import Spinner from "../components/Spinner";
 import DeleteUserForm from "../components/DeleteUserForm";
 
 function Profile() {
@@ -27,7 +27,7 @@ function Profile() {
     <section className="bg-indigo-50">
       <div className="container m-auto max-w-2xl py-24 space-y-6">
         {loading ? (
-          <Spinners loading={loading} />
+          <Spinner loading={loading} />
         ) : (
           <>
             <UpdateProfileInformationForm user={user} />

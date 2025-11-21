@@ -2,7 +2,7 @@ import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import axiosClient from "../axios";
 import { useEffect, useState } from "react";
-import Spinners from "../components/Spinners";
+import Spinner from "../components/Spinner";
 import NotFound from "./NotFound";
 
 function Job() {
@@ -48,7 +48,7 @@ function Job() {
       <section className="bg-indigo-50">
         <div className="container m-auto py-10 px-6">
           {loading ? (
-            <Spinners loading={loading} />
+            <Spinner loading={loading} />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
               <main>
