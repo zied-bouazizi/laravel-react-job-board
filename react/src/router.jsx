@@ -14,6 +14,7 @@ import Job from "./views/Job";
 import Profile from "./views/Profile";
 import RootLayout from "./layouts/RootLayout";
 import ManageJobs from "./views/ManageJobs";
+import EditJob from "./views/EditJob";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: "/manage-jobs",
             element: <ManageJobs />,
+          },
+          {
+            path: "/manage-jobs/edit-job/:id",
+            element: <EditJob />,
           },
           {
             path: "/profile",

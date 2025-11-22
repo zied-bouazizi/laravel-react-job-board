@@ -56,7 +56,7 @@ function ManageJobs() {
                     </td>
                     <td className="px-4 py-8 border-t border-b border-indigo-300 font-bold">
                       <Link
-                        to={`/edit-job/${listing.id}`}
+                        to={`/manage-jobs/edit-job/${listing.id}`}
                         className="text-indigo-500 px-6 py-2 rounded-xl flex items-center justify-center gap-2"
                       >
                         <FaEdit />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreListingRequest;
+use App\Http\Requests\UpdateListingRequest;
 use App\Http\Resources\ListingResource;
 use App\Models\Listing;
 use Illuminate\Http\Request;
@@ -44,6 +45,22 @@ class ListingController extends Controller
     public function show(Listing $listing)
     {
         $listing->load('company');
+
+        return new ListingResource($listing);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateListingRequest $request, Listing $listing)
+    {
+        $user = $request->user();
+
+        abort_if($user->id !== $listing->user_id, 403, 'Access Forbidden');
+
+        $data = $request->validated();
+
+        $listing->update($data);
 
         return new ListingResource($listing);
     }

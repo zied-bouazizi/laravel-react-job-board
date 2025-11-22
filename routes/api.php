@@ -13,6 +13,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/listings/manage', [ListingController::class, 'manage']);
     Route::post('/listings', [ListingController::class, 'store']);
+    Route::put('/listings/{listing}', [ListingController::class, 'update']);
 });
 
 Route::get('/listings', [ListingController::class, 'index']);
