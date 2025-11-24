@@ -3,12 +3,14 @@ import axiosClient from "../axios";
 import { useEffect, useState, useCallback } from "react";
 import Spinner from "./Spinner";
 import InfiniteScroll from "./InfiniteScroll";
+import SearchForm from "./SearchForm";
 
 function JobListings({ isHome = false }) {
   const [listings, setListings] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [searchKeywords, setSearchKeywords] = useState("");
 
   useEffect(() => {
     const url = isHome ? "/listings?limit=3" : "/listings";
@@ -20,17 +22,37 @@ function JobListings({ isHome = false }) {
     });
   }, [isHome]);
 
+  const onChangeKeywords = (keywords) => {
+    setSearchKeywords(keywords);
+  };
+
+  const onSearch = () => {
+    setLoading(true);
+
+    axiosClient
+      .get(`/listings?search=${encodeURIComponent(searchKeywords)}`)
+      .then(({ data }) => {
+        setListings(data.data);
+        setNextPage(data.links?.next);
+        setLoading(false);
+      });
+  };
+
   const loadMore = useCallback(() => {
     if (!nextPage || loadingMore || isHome) return;
 
     setLoadingMore(true);
 
-    axiosClient.get(nextPage).then(({ data }) => {
-      setListings((prevListings) => [...prevListings, ...data.data]);
+    const url = searchKeywords
+      ? `${nextPage}&search=${encodeURIComponent(searchKeywords)}`
+      : nextPage;
+
+    axiosClient.get(url).then(({ data }) => {
+      setListings((prev) => [...prev, ...data.data]);
       setNextPage(data.links?.next);
       setLoadingMore(false);
     });
-  }, [nextPage, loadingMore, isHome]);
+  }, [nextPage, loadingMore, isHome, searchKeywords]);
 
   return (
     <section className="bg-blue-50 px-4 py-10">
@@ -43,11 +65,25 @@ function JobListings({ isHome = false }) {
           <Spinner loading={loading} />
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {listings.map((listing) => (
-                <JobListing key={listing.id} listing={listing} />
-              ))}
-            </div>
+            {!isHome && (
+              <SearchForm
+                searchKeywords={searchKeywords}
+                onChangeKeywords={onChangeKeywords}
+                onSearch={onSearch}
+              />
+            )}
+
+            {listings.length === 0 ? (
+              <div className="px-4 py-2 font-bold">
+                <p className="text-center">No Jobs Found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {listings.map((listing) => (
+                  <JobListing key={listing.id} listing={listing} />
+                ))}
+              </div>
+            )}
 
             {!isHome && (
               <>

@@ -17,7 +17,14 @@ class ListingController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('limit', 6);
-        $listings = Listing::latest()->paginate($perPage);
+        $search = $request->get('search');
+
+        $listings = Listing::latest()
+            ->when($search, fn($query) => $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            }))
+            ->paginate($perPage);
 
         return ListingResource::collection($listings);
     }
