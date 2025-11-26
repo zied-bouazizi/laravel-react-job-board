@@ -22,9 +22,9 @@ function JobListings({ isHome = false }) {
     });
   }, [isHome]);
 
-  const onChangeKeywords = (keywords) => {
+  const onChangeKeywords = useCallback((keywords) => {
     setSearchKeywords(keywords);
-  };
+  }, []);
 
   const onSearch = () => {
     setLoading(true);

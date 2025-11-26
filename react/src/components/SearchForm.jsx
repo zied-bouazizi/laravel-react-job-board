@@ -6,12 +6,12 @@ function SearchForm({ searchKeywords = "", onSearch, onChangeKeywords }) {
 
   useEffect(() => {
     onChangeKeywords(keywords);
-  }, [keywords]);
+  }, [keywords, onChangeKeywords]);
 
   const onSubmit = (ev) => {
     ev.preventDefault();
 
-    onSearch(keywords);
+    onSearch();
   };
 
   return (
@@ -22,6 +22,8 @@ function SearchForm({ searchKeywords = "", onSearch, onChangeKeywords }) {
         </div>
 
         <input
+          id="keywords"
+          name="keywords"
           type="text"
           value={keywords}
           onChange={(ev) => setKeywords(ev.target.value)}

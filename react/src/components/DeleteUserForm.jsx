@@ -65,6 +65,15 @@ function DeleteUserForm() {
             ></div>
           )}
 
+          <input
+            type="email"
+            name="email"
+            defaultValue=""
+            autoComplete="email"
+            style={{ display: "none" }}
+            tabIndex={-1}
+          />
+
           <h2 className="text-2xl font-semibold mb-1">
             Are you sure you want to delete your account?
           </h2>
@@ -85,6 +94,7 @@ function DeleteUserForm() {
               type="password"
               id="password"
               name="password"
+              autoComplete="current-password"
               value={form.password}
               onChange={(ev) => setForm({ ...form, password: ev.target.value })}
               className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"

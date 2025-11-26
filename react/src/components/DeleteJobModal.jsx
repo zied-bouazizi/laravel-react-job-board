@@ -3,12 +3,12 @@ import Modal from "../components/Modal";
 function DeleteJobModal({ jobToDelete, closeModal, onDeleteClick }) {
   return (
     <Modal show={Boolean(jobToDelete)} onClose={closeModal}>
-      <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-        <h2 className="text-2xl font-semibold mb-10">
+      <div className="p-6 sm:p-8">
+        <h2 className="text-2xl font-semibold mb-6">
           Are you sure you want to delete this job?
         </h2>
 
-        <div className="mb-4 flex gap-2">
+        <div className="mb-2 flex gap-2">
           <button
             type="button"
             onClick={closeModal}

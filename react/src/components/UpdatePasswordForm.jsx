@@ -44,6 +44,15 @@ function UpdatePasswordForm() {
         ></div>
       )}
       <form onSubmit={onSubmit}>
+        <input
+          type="email"
+          name="email"
+          defaultValue=""
+          autoComplete="email"
+          style={{ display: "none" }}
+          tabIndex={-1}
+        />
+
         <h2 className="text-3xl font-semibold">Update Password</h2>
 
         <p className="text-gray-600 mb-6">
@@ -61,6 +70,7 @@ function UpdatePasswordForm() {
             type="password"
             id="current_password"
             name="current_password"
+            autoComplete="current-password"
             value={form.current_password}
             onChange={(ev) =>
               setForm({ ...form, current_password: ev.target.value })
@@ -81,6 +91,7 @@ function UpdatePasswordForm() {
             type="password"
             id="password"
             name="password"
+            autoComplete="new-password"
             value={form.password}
             onChange={(ev) => setForm({ ...form, password: ev.target.value })}
             className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
@@ -99,6 +110,7 @@ function UpdatePasswordForm() {
             type="password"
             id="password_confirmation"
             name="password_confirmation"
+            autoComplete="new-password"
             value={form.password_confirmation}
             onChange={(ev) =>
               setForm({ ...form, password_confirmation: ev.target.value })

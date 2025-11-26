@@ -1,10 +1,15 @@
+import Head from "../components/Head";
 import JobListings from "../components/JobListings";
 
 function Jobs() {
   return (
-    <section className="px-4 py-6">
-      <JobListings />
-    </section>
+    <>
+      <Head title="Jobs" />
+
+      <section className="px-4 py-6">
+        <JobListings />
+      </section>
+    </>
   );
 }
 

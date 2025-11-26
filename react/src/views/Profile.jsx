@@ -5,6 +5,7 @@ import UpdateProfileInformationForm from "../components/UpdateProfileInformation
 import axiosClient from "../axios";
 import Spinner from "../components/Spinner";
 import DeleteUserForm from "../components/DeleteUserForm";
+import Head from "../components/Head";
 
 function Profile() {
   const [user, setUser] = useState({});
@@ -24,23 +25,27 @@ function Profile() {
   }, []);
 
   return (
-    <section>
-      <div className="container m-auto max-w-2xl py-24 space-y-6">
-        {loading ? (
-          <Spinner loading={loading} />
-        ) : (
-          <>
-            <UpdateProfileInformationForm user={user} />
+    <>
+      <Head title="Profile" />
 
-            <UpdatePasswordForm />
+      <section>
+        <div className="container m-auto max-w-2xl py-24 space-y-6">
+          {loading ? (
+            <Spinner loading={loading} />
+          ) : (
+            <>
+              <UpdateProfileInformationForm user={user} />
 
-            <CompanyForm company={company} />
+              <UpdatePasswordForm />
 
-            <DeleteUserForm />
-          </>
-        )}
-      </div>
-    </section>
+              <CompanyForm company={company} />
+
+              <DeleteUserForm />
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
 

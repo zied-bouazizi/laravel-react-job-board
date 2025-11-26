@@ -7,6 +7,7 @@ import NotFound from "./NotFound";
 import { useStateContext } from "../contexts/ContextProvider";
 import DeleteJobModal from "../components/DeleteJobModal";
 import { toast } from "react-toastify";
+import Head from "../components/Head";
 
 function Job() {
   const { id } = useParams();
@@ -56,6 +57,8 @@ function Job() {
 
   return (
     <>
+      <Head title={listing.title} />
+
       <section className="bg-white">
         <div className="container m-auto py-6 px-6">
           <Link

@@ -52,6 +52,7 @@ function UpdateProfileInformationForm({ user }) {
             type="text"
             id="name"
             name="name"
+            autoComplete="name"
             value={userData.name}
             onChange={(ev) =>
               setUserData({ ...userData, name: ev.target.value })
@@ -69,6 +70,7 @@ function UpdateProfileInformationForm({ user }) {
             type="email"
             id="email"
             name="email"
+            autoComplete="email"
             value={userData.email}
             onChange={(ev) =>
               setUserData({ ...userData, email: ev.target.value })
