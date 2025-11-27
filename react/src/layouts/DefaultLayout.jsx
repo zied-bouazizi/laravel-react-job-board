@@ -8,10 +8,12 @@ function DefaultLayout() {
   const { userToken, setCurrentUser } = useStateContext();
 
   useEffect(() => {
+    if (!userToken) return;
+
     axiosClient.get("/profile/user").then(({ data }) => {
       setCurrentUser(data);
     });
-  }, [setCurrentUser]);
+  }, [userToken, setCurrentUser]);
 
   if (!userToken) {
     return <Navigate to="/login" />;

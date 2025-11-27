@@ -1,36 +1,63 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const StateContext = createContext({
     currentUser: {},
     userToken: null,
     setCurrentUser: () => {},
-    setUserToken: () => {}
+    login: () => {},
+    logout: () => {},
 })
 
 export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({})
-    const [userToken, _setUserToken] = useState(localStorage.getItem("TOKEN") || sessionStorage.getItem("TOKEN") || '')
+    const [userToken, setUserToken] = useState(localStorage.getItem("TOKEN") || null)
 
-    const setUserToken = (token, remember = false) => {
-        if (token) {
-            if (remember) {
-                localStorage.setItem("TOKEN", token);
-            } else {
-                sessionStorage.setItem("TOKEN", token);
-            }
-        } else {
-        localStorage.removeItem("TOKEN");
-        sessionStorage.removeItem("TOKEN");
-        }
-        _setUserToken(token);
+    const login = (user, token) => {
+        setCurrentUser(user);
+        setUserToken(token);
+        localStorage.setItem("TOKEN", token);
+        localStorage.setItem("auth-login", Date.now());
     };
+
+    const logout = useCallback(() => {
+        setCurrentUser({});
+        setUserToken(null);
+        localStorage.removeItem("TOKEN");
+        localStorage.setItem("auth-logout", Date.now());
+    }, []);
+
+    useEffect(() => {
+        const syncAuth = (event) => {
+            if (event.key === "auth-login") {
+                setUserToken(localStorage.getItem("TOKEN"));
+            }
+
+            if (event.key === "auth-logout") {
+                setCurrentUser({});
+                setUserToken(null);
+            }
+        };
+
+        window.addEventListener("storage", syncAuth);
+        return () => window.removeEventListener("storage", syncAuth);
+    }, []);
+
+    useEffect(() => {
+        const handleLogout = () => {
+            logout();
+        };
+
+        window.addEventListener("auth-logout", handleLogout);
+        return () => window.removeEventListener("auth-logout", handleLogout);
+    }, [logout]);
 
     return (
         <StateContext.Provider value={{
             currentUser,
             userToken,
             setCurrentUser,
-            setUserToken
+            login,
+            logout,
         }}>
             { children }
         </StateContext.Provider>

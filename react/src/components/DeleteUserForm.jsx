@@ -4,7 +4,7 @@ import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
 
 function DeleteUserForm() {
-  const { setCurrentUser, setUserToken } = useStateContext();
+  const { logout } = useStateContext();
   const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
   const [form, setForm] = useState({ password: "" });
   const [error, setError] = useState({ __html: "" });
@@ -21,8 +21,7 @@ function DeleteUserForm() {
     axiosClient
       .delete("/profile", { data: form })
       .then(() => {
-        setCurrentUser({});
-        setUserToken(null);
+        logout();
       })
       .catch((error) => {
         if (error.response) {

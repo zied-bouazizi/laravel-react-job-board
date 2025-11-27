@@ -33,7 +33,7 @@ function Job() {
           setNotFound(true);
         }
       });
-  }, []);
+  }, [id]);
 
   if (notFound) {
     return <NotFound />;
@@ -122,7 +122,7 @@ function Job() {
                   </p>
                 </div>
 
-                {currentUser.id == listing.user.id && (
+                {currentUser?.id && currentUser.id == listing.user.id && (
                   <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                     <h3 className="text-xl font-bold mb-6">Manage Job</h3>
                     <Link

@@ -7,15 +7,14 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const { userToken, setCurrentUser, setUserToken } = useStateContext();
+  const { userToken, logout } = useStateContext();
   const isAuthenticated = !!userToken;
 
-  const logout = (ev) => {
+  const handleLogout = (ev) => {
     ev.preventDefault();
 
     axiosClient.post("/logout").then(() => {
-      setCurrentUser({});
-      setUserToken(null);
+      logout();
       setOpen(false);
     });
   };
@@ -61,9 +60,9 @@ function Navbar() {
             to="/"
             onClick={() => setOpen(false)}
           >
-            <img className="h-10 w-auto" src={logo} alt="Job Listing" />
+            <img className="h-10 w-auto" src={logo} alt="Job Board" />
             <span className="hidden md:block text-white text-2xl font-bold ml-2">
-              Job Listing
+              Job Board
             </span>
           </NavLink>
 
@@ -85,7 +84,7 @@ function Navbar() {
 
             {isAuthenticated && (
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-white hover:bg-gray-900 rounded-md px-3 py-2"
               >
                 Logout
@@ -103,7 +102,7 @@ function Navbar() {
 
             {isAuthenticated && (
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-white hover:bg-gray-900 rounded-md px-3 py-2 w-full text-left"
               >
                 Logout

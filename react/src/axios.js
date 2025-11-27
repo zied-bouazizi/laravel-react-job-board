@@ -5,7 +5,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem("TOKEN") || sessionStorage.getItem("TOKEN");
+    const token = localStorage.getItem("TOKEN");
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -16,10 +16,7 @@ axiosClient.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.response && error.response.status === 401) {
-        localStorage.removeItem('TOKEN');
-        sessionStorage.removeItem("TOKEN");
-        window.location.reload();
-        return error;
+        window.dispatchEvent(new Event("auth-logout"));
     }
     throw error;
 });

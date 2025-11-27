@@ -5,7 +5,7 @@ import axiosClient from '../axios';
 import Head from '../components/Head';
 
 function Login() {
-  const { setCurrentUser, setUserToken } = useStateContext();
+  const { login } = useStateContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -29,8 +29,8 @@ function Login() {
           remember 
       })
       .then(({data}) => {
-          setCurrentUser(data.user);
-          setUserToken(data.token, remember);
+          login(data.user, data.token);
+
           setMessage("");
       })
       .catch((error) => {

@@ -28,7 +28,11 @@ class RegisteredUserController extends Controller
 
         $user->company()->create($data['company']);
 
-        $token = $user->createToken('main')->plainTextToken;
+        $tokenResult = $user->createToken('main');
+        $tokenResult->accessToken->expires_at = now()->addMinutes(120);
+        $tokenResult->accessToken->save();
+
+        $token = $tokenResult->plainTextToken;
 
         event(new Registered($user));
 

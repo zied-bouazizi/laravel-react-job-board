@@ -6,7 +6,7 @@ import CompanyInfo from "../components/CompanyInfo";
 import Head from "../components/Head";
 
 function Signup() {
-  const { setCurrentUser, setUserToken } = useStateContext();
+  const { login } = useStateContext();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -38,8 +38,7 @@ function Signup() {
         company: userData.company,
       })
       .then(({ data }) => {
-        setCurrentUser(data.user);
-        setUserToken(data.token);
+        login(data.user, data.token);
       })
       .catch((error) => {
         if (error.response) {

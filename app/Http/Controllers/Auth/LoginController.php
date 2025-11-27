@@ -21,7 +21,13 @@ class LoginController extends Controller
 
         $remember = $request->boolean('remember');
         $tokenName = $remember ? 'main_remember' : 'main';
-        $token = $user->createToken($tokenName)->plainTextToken;
+        $tokenResult = $user->createToken($tokenName);
+        $token = $tokenResult->plainTextToken;
+
+        if (!$remember) {
+            $tokenResult->accessToken->expires_at = now()->addMinutes(120);
+            $tokenResult->accessToken->save();
+        }
 
         return [
             'user' => new UserResource($user),
