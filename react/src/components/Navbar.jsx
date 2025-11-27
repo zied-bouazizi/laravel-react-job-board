@@ -7,8 +7,13 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const { userToken, logout } = useStateContext();
+  const { userToken, setJobsRefreshKey, logout } = useStateContext();
   const isAuthenticated = !!userToken;
+
+  const refreshJobs = () => {
+    setJobsRefreshKey(prev => prev + 1);
+    setOpen(false);
+  };
 
   const handleLogout = (ev) => {
     ev.preventDefault();
@@ -39,16 +44,6 @@ function Navbar() {
       ? "bg-black text-white rounded-md px-3 py-2 block"
       : "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 block";
 
-  const MobileNavLink = ({ to, label }) => (
-    <NavLink
-      to={to}
-      className={linkClass}
-      onClick={() => setOpen(false)}
-    >
-      {label}
-    </NavLink>
-  );
-
   return (
     <nav className="bg-indigo-700 border-b border-indigo-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -77,7 +72,12 @@ function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-3 ml-auto">
             {links.map((link) => (
-              <NavLink key={link.to} to={link.to} className={linkClass}>
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={linkClass}
+                onClick={link.to === "/jobs" ? refreshJobs : null}
+                >
                 {link.label}
               </NavLink>
             ))}
@@ -97,7 +97,14 @@ function Navbar() {
         {open && (
           <div className="md:hidden pb-4 space-y-2">
             {links.map((link) => (
-              <MobileNavLink key={link.to} to={link.to} label={link.label} />
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={linkClass}
+                onClick={link.to === "/jobs" ? refreshJobs : () => setOpen(false)}
+                >
+                {link.label}
+              </NavLink>
             ))}
 
             {isAuthenticated && (

@@ -3,7 +3,9 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 const StateContext = createContext({
     currentUser: {},
     userToken: null,
+    jobsRefreshKey: 0,
     setCurrentUser: () => {},
+    setJobsRefreshKey: () => {},
     login: () => {},
     logout: () => {},
 })
@@ -11,6 +13,7 @@ const StateContext = createContext({
 export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({})
     const [userToken, setUserToken] = useState(localStorage.getItem("TOKEN") || null)
+    const [jobsRefreshKey, setJobsRefreshKey] = useState(0);
 
     const login = (user, token) => {
         setCurrentUser(user);
@@ -55,7 +58,9 @@ export const ContextProvider = ({ children }) => {
         <StateContext.Provider value={{
             currentUser,
             userToken,
+            jobsRefreshKey,
             setCurrentUser,
+            setJobsRefreshKey,
             login,
             logout,
         }}>
