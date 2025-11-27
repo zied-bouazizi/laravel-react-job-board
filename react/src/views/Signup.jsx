@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
 import CompanyInfo from "../components/CompanyInfo";
@@ -21,9 +21,9 @@ function Signup() {
   });
   const [error, setError] = useState({ __html: "" });
 
-  const onChangeCompany = (companyData) => {
-    setUserData({ ...userData, company: companyData });
-  };
+  const onChangeCompany = useCallback((companyData) => {
+    setUserData(prev => ({ ...prev, company: companyData }));
+  }, []);
 
   const onSubmit = (ev) => {
     ev.preventDefault();

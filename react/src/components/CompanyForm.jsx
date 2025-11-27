@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import axiosClient from "../axios";
 import { toast } from "react-toastify";
 import CompanyInfo from "./CompanyInfo";
@@ -7,9 +7,9 @@ function CompanyForm({ company }) {
   const [userCompany, setUserCompany] = useState({ ...company });
   const [error, setError] = useState({ __html: "" });
 
-  const onChangeCompany = (companyData) => {
+  const onChangeCompany = useCallback((companyData) => {
     setUserCompany((prev) => ({ ...prev, ...companyData }));
-  };
+  }, []);
 
   const onSubmit = (ev) => {
     ev.preventDefault();

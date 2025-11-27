@@ -5,7 +5,7 @@ function CompanyInfo({ userCompany, onChangeCompany, isUpdate = false }) {
 
   useEffect(() => {
     onChangeCompany(companyData);
-  }, [companyData]);
+  }, [companyData, onChangeCompany]);
 
   return (
     <>
