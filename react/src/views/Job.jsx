@@ -49,7 +49,7 @@ function Job() {
 
   const onDeleteClick = () => {
     axiosClient.delete(`/listings/${jobToDelete}`).then(() => {
-      navigate("/jobs");
+      navigate("/manage-jobs");
       window.scrollTo({ top: 0, behavior: "smooth" });
       toast.success("Job deleted successfully");
     });

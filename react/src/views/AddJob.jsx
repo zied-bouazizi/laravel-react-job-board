@@ -21,9 +21,8 @@ function AddJob() {
 
     axiosClient
       .post("/listings", job)
-      .then(() => {
-        navigate("/jobs");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      .then(({ data }) => {
+        navigate(`/jobs/${data.id}`);
         toast.success("Job added successfully.");
       })
       .catch((error) => {
