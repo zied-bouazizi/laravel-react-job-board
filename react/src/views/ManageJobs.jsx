@@ -11,17 +11,18 @@ import Head from "../components/Head";
 function ManageJobs() {
   const [listings, setListings] = useState([]);
   const [nextPage, setNextPage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [jobToDelete, setJobToDelete] = useState(null);
 
-  useEffect(() => {
+  const getListings = () => {
+    setLoading(true);
     axiosClient.get("/listings/manage").then(({ data }) => {
       setListings(data.data);
       setNextPage(data.links?.next);
       setLoading(false);
     });
-  }, []);
+  };
 
   const loadMore = useCallback(() => {
     if (!nextPage || loadingMore) return;
@@ -45,11 +46,15 @@ function ManageJobs() {
 
   const onDeleteClick = () => {
     axiosClient.delete(`/listings/${jobToDelete}`).then(() => {
+      getListings();
       toast.success("Job deleted successfully");
-      setListings((prev) => prev.filter((job) => job.id !== jobToDelete));
       closeModal();
     });
   };
+
+  useEffect(() => {
+    getListings();
+  }, []);
 
   return (
     <>
